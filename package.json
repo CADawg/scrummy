@@ -1,0 +1,16 @@
+{
+  "name": "scrum_bot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Conor",
+  "license": "UNLICENCED",
+  "dependencies": {
+    "discord.js": "^12.4.0",
+    "dotenv": "^8.2.0"
+  }
+}
