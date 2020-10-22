@@ -3,10 +3,10 @@ require('dotenv').config();
 
 const client = new Discord.Client();
 
-const scrum_people = ["185855886755889162", "160888334195884032", "209333302430138368", "119867900260515840", "418414542964523011"];
+const scrum_people = []; // List of discord id's as strings
 const target_days = [1,3,5]; // Monday, Wednesday, Friday
 const target_time = 11; // 11 AM UTC
-let scrum_channels = {"768833140986478612": {"done": [], "last_message": null, "reminders": []}};
+let scrum_channels = {"channel id": {"done": [], "last_message": null, "reminders": []}};
 
 let evil_last_time = null;
 let evil_scrum_mentions = null;
