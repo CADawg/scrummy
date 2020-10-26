@@ -164,7 +164,7 @@ client.on('message', async message => {
         if (command === 'undo') {
             await message.delete();
             let users_mentioned = message.mentions.members;
-            if (message.mentions.members.size === 0) {
+            if (users_mentioned.size === 0) {
                 await send_short_lived_message(message.channel, "You didn't mention a user's submission to undo.");
                 return;
             }
