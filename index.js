@@ -92,7 +92,7 @@ async function evilInterval() {
                     }
 
                     if (peopleToDo.length > 0) {
-                        scrum_channels[channel].reminders.push(await dc_channel.send("For today's scrum we still need submissions from: " + idListToMentions()));
+                        scrum_channels[channel].reminders.push(await dc_channel.send("For today's scrum we still need submissions from: " + idListToMentions(peopleToDo)));
                     } else {
                         clearInterval(evil_scrum_mentions);
                     }
