@@ -12,13 +12,13 @@ let scrum_channels = {"channel id": {"done": {}, "last_message": null, "reminder
 let evil_last_time = null;
 let evil_scrum_mentions = null;
 
-function idListToMentions() {
+function idListToMentions(mentions) {
     let s = "";
-    for (let p =0; p < scrum_people.length; p++) {
+    for (let p =0; p < mentions.length; p++) {
         if (s === "") {
-            s += "<@" + scrum_people[p] + ">";
+            s += "<@" + mentions[p] + ">";
         } else {
-            s += ", <@" + scrum_people[p] + ">";
+            s += ", <@" + mentions[p] + ">";
         }
     }
 
@@ -28,7 +28,7 @@ function idListToMentions() {
 function getEmbed(channel) {
     let d = new Date();
 
-    let peopleToDo = {...scrum_people};
+    let peopleToDo = [...scrum_people];
 
     for (let user in channel.done) {
         if (channel.done.hasOwnProperty(user)) {
@@ -54,7 +54,7 @@ function getEmbed(channel) {
             .setAuthor('crumS', 'https://imgur.com/cITzLf7.png', 'https://conorhow.land')
             .setDescription('Today is a Scrum Day. Please post updates below.')
             .setThumbnail('https://imgur.com/cITzLf7.png')
-            .addFields({ name: 'Waiting On Submissions From', value: idListToMentions(peopleToDo)})
+            .addFields({ name: 'Waiting On Submissions From', value: mentions})
             .setTimestamp(d)
             .setFooter('Served Fresh For You', 'https://imgur.com/cITzLf7.png');
     }
@@ -80,10 +80,9 @@ async function evilInterval() {
     if (date.getUTCDate() === evil_last_time.getUTCDate()) {
         for (let channel in scrum_channels) {
             if (scrum_channels.hasOwnProperty(channel)) {
-                console.log(channel);
                 let dc_channel = await client.channels.cache.get(channel);
                 try {
-                    let peopleToDo = {...scrum_people};
+                    let peopleToDo = [...scrum_people];
 
                     for (let user in channel.done) {
                         if (channel.done.hasOwnProperty(user)) {
@@ -114,14 +113,12 @@ async function intervalRunner() {
             for (let channel in scrum_channels) {
                 if (scrum_channels.hasOwnProperty(channel)) {
                     let dc_channel = await client.channels.cache.get(channel);
-                    console.log(dc_channel);
 
                     scrum_channels[channel].done = {};
                     for (let r = 0; r < scrum_channels[channel].reminders.length; r++) {
                         // delete old reminders
                         try {
                             let message = await dc_channel.messages.cache.get(scrum_channels[channel].reminders[r]);
-                            console.log(message);
                             await message.delete();
                         } catch (e) {}
                     }
@@ -162,7 +159,7 @@ client.on('message', async message => {
         const command = args.shift().toLowerCase();
 
         if (command === 'undo') {
-            await message.delete();
+            try{await message.delete();}catch(e){}
             let users_mentioned = message.mentions.members;
             if (users_mentioned.size === 0) {
                 await send_short_lived_message(message.channel, "You didn't mention a user's submission to undo.");
