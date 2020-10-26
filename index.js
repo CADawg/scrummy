@@ -6,7 +6,7 @@ const client = new Discord.Client();
 const app_owner = "discord id of owner";
 const scrum_people = []; // List of discord id's as strings
 const target_days = [1,3,5]; // Monday, Wednesday, Friday
-const target_time = 12; // 12 AM UTC
+const target_time = 12; // 12 PM UTC
 let scrum_channels = {"channel id": {"done": {}, "last_message": null, "reminders": []}};
 
 let evil_last_time = null;
