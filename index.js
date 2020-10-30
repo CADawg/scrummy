@@ -84,8 +84,8 @@ async function evilInterval() {
                 try {
                     let peopleToDo = [...scrum_people];
 
-                    for (let user in channel.done) {
-                        if (channel.done.hasOwnProperty(user)) {
+                    for (let user in scrum_channels[channel].done) {
+                        if (scrum_channels[channel].done.hasOwnProperty(user)) {
                             let index = peopleToDo.indexOf(user);
                             if (index !== -1) peopleToDo.splice(index, 1);
                         }
